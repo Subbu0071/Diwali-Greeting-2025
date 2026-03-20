@@ -1,0 +1,279 @@
+:root{
+  --bg:#071226; /* deep night */
+  --accent:#ffb86b; /* warm gold */
+  --accent-2:#ff6b6b; /* warm pinkish */
+  --muted:#9fb0c7;
+  --glass: rgba(255,255,255,0.04);
+  --card: rgba(255,255,255,0.03);
+  --radius:18px;
+  --ease:cubic-bezier(.2,.9,.2,1);
+  --font-heading: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(7,18,38,0.6), transparent),
+              linear-gradient(180deg,#061026 0%, #081b33 60%),
+              var(--bg);
+  font-family:var(--font-body);
+  color: #e6f2ff;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow:hidden;
+}
+
+/* Scenes full-screen */
+.scene{
+  display:none;
+  height:100vh;
+  width:100vw;
+  padding:30px;
+  position:relative;
+  transition:opacity .6s var(--ease), transform .6s var(--ease);
+}
+.scene.active{display:block;}
+
+/* topbar */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  position:relative;
+  z-index:6;
+  margin-bottom:18px;
+}
+.topbar .scene-title{
+  text-align:center;
+  font-weight:600;
+  color:var(--muted);
+}
+
+.ghost{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  padding:8px 12px;
+  border-radius:10px;
+  color:var(--muted);
+  cursor:pointer;
+  backdrop-filter: blur(6px);
+}
+
+/* Center card (entry) */
+.center-card{
+  width:min(880px, 92%);
+  margin:80px auto;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  padding:36px;
+  border-radius:22px;
+  text-align:center;
+  box-shadow: 0 8px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.03);
+}
+.title{
+  font-family:var(--font-heading);
+  font-weight:700;
+  font-size:38px;
+  margin:6px 0 12px;
+  letter-spacing:0.6px;
+  text-shadow: 0 6px 18px rgba(255,184,107,0.08);
+}
+.lead{
+  color:var(--muted);
+  font-size:16px;
+  margin-bottom:18px;
+}
+
+/* Buttons */
+.btn-primary{
+  background:linear-gradient(90deg,var(--accent), #ff9f43);
+  color:#071226;
+  border:none;
+  padding:12px 20px;
+  border-radius:14px;
+  font-weight:600;
+  box-shadow: 0 8px 30px rgba(255,160,80,0.12);
+  cursor:pointer;
+}
+.btn-secondary{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  padding:10px 16px;
+  border-radius:12px;
+  color:var(--muted);
+  cursor:pointer;
+}
+.btn-small{
+  background:linear-gradient(90deg,#ffe2b8,#ffd6a0);
+  border:none;
+  padding:8px 10px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+/* floating lanterns - decorative */
+.floating-lanterns{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image: radial-gradient(2px 2px at 10% 10%, rgba(255,184,107,0.08), transparent),
+                    radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,0.03), transparent);
+  opacity:0.8;
+}
+
+/* Diyas layout */
+.diyas-wrap{
+  width:100%;
+  height:calc(100vh - 80px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:40px;
+  flex-direction:column;
+  padding:40px 16px;
+}
+.diyas{
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  max-width:1000px;
+}
+/* diya element */
+.diya{
+  width:86px;
+  height:78px;
+  background:linear-gradient(180deg,#3b2b18,#2a1708);
+  border-radius:46px 46px 28px 28px;
+  position:relative;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5), inset 0 4px 12px rgba(255,200,100,0.04);
+  cursor:pointer;
+  transition: transform .18s var(--ease);
+}
+.diya:active{ transform: translateY(4px) scale(.99);}
+
+/* flame (hidden until lit) */
+.diya::after{
+  content:'';
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%) translateY(10px) scale(.6);
+  bottom:36px;
+  width:14px;
+  height:28px;
+  background: radial-gradient(ellipse at 50% 30%, rgba(255,250,200,1) 0%, rgba(255,200,80,0.8) 40%, rgba(255,120,30,0.8) 70%, transparent 100%);
+  opacity:0;
+  filter:drop-shadow(0 6px 16px rgba(255,160,80,0.12));
+  transition: opacity .36s var(--ease), transform .36s var(--ease);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+/* glow when lit */
+.diya.lit{
+  box-shadow: 0 18px 30px rgba(255,160,80,0.14), 0 0 36px rgba(255,180,100,0.06);
+  transform: translateY(-6px) scale(1.02);
+}
+.diya.lit::after{
+  opacity:1;
+  transform:translateX(-50%) translateY(-8px) scale(1);
+}
+
+/* blessings text */
+.blessings{
+  margin-top:22px;
+  text-align:center;
+  color:var(--muted);
+}
+.fade-in{animation:fadeInUp .8s var(--ease) both}
+.hidden{display:none}
+.big-message{
+  font-size:20px;
+  color:#fff;
+  margin-top:12px;
+  font-weight:600;
+}
+
+/* cracker stage */
+.cracker-stage{
+  height:calc(100vh - 80px);
+  position:relative;
+  overflow:hidden;
+}
+.cracker-stage .info{
+  position:absolute;
+  top:22px;
+  left:24px;
+  color:var(--muted);
+}
+
+/* rocket styling when created dynamically (JS creates this) */
+.rocket{
+  position:absolute;
+  width:8px;
+  height:36px;
+  background:linear-gradient(180deg,#ffefc2,#ffd6a0);
+  border-radius:8px;
+  transform-origin:center bottom;
+  box-shadow:0 8px 20px rgba(255,160,80,0.12);
+  z-index:30;
+}
+
+/* particle burst generic */
+.particle{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  opacity:1;
+  pointer-events:none;
+  will-change:transform, opacity;
+}
+
+/* Blessings page */
+.message-card{
+  width:min(900px,92%);
+  margin:40px auto;
+  padding:28px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+}
+.message-card h2{
+  font-family:var(--font-heading);
+  font-size:28px;
+  margin-bottom:6px;
+}
+.touching{color:var(--muted);line-height:1.7;margin:14px 0}
+.signature{margin-top:18px}
+
+/* closing scene */
+.closing-center{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  text-align:center;
+}
+
+/* small screens */
+@media (max-width:720px){
+  .title{font-size:28px}
+  .diya{width:68px;height:62px}
+  .center-card{padding:22px;border-radius:16px}
+}
+
+/* small animation helpers */
+@keyframes fadeInUp{
+  from{opacity:0; transform:translateY(10px)}
+  to{opacity:1; transform:translateY(0)}
+}
