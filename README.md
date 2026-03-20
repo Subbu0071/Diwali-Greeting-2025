@@ -5,6 +5,8 @@
 Instead of being a simple greeting page, this project turns the celebration into a small journey. Users enter the celebration, light diyas, launch crackers and rockets, read warm blessings, and replay or share the experience.
 
 ---
+website:- https://diwali-greeting-2025-subbu.netlify.app/
+---
 
 ## 🎆 Project Highlights
 
